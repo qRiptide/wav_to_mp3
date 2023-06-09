@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  app:
+    image: wav-to-mp3-app
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - wav-to-mp3-data:${RECORDS_PATH}
+    command: bash -c "
+      apt-get update && apt-get install -y ffmpeg;
+      python -m venv venv;
+      pip install --no-cache-dir -r requirements.txt;
+      alembic upgrade head;
+      uvicorn src.main:app --host app --port 8000 --reload
+      "
+    depends_on:
+      - db
+
+  db:
+    image: wav-to-mp3-db
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASSWORD}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  db-data: {}
+  wav-to-mp3-data: {}

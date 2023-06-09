@@ -1,0 +1,28 @@
+Для развертывания проекта необходимо:
+
+    0. Установить Docker и Docker Compose любым удобным способом.
+
+    1. Используя PowerShell / bash / zsh перейти в директорию с проектом
+       "cd /project/dir" (где /project/dir/ директория с проектом на хосте).
+    2. В директории проекта использовать команду -> "docker compose up".
+    3. Можно пользоваться сервисом.
+
+
+Примеры взаимодействия с API:
+
+    1. POST REQUEST:
+            URL: http://host:port/user
+            REQUEST BODY: {"username": "some-name"}
+
+        RESPONSE: {"id": 1, "uuid": "some-uuid"}
+
+    2. POST REQUEST:
+            URL: http://host:port/record
+            REQUEST BODY: {"user_id": 1, "user_uuid": "your-uuid", "wav_record": "some-bytes"}
+
+        RESPONSE: {"download_url": "http://host:port/record?record_id=1&user_id=1"}
+
+    3. GET REQUEST:
+            URL: http://host:port/record?record_id=1&user_id=1
+
+       RESPONSE: File respononse
