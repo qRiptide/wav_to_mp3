@@ -94,9 +94,9 @@ class Mp3Record(Base):
                            record_id: int
                            ) -> Row | None:
         stmt = \
-            select(User.id, Mp3Record.path) \
-            .join(Mp3Record, User.id == Mp3Record.user_id) \
-            .where(Mp3Record.id == record_id, Mp3Record.user_id == user_id)
+            select(User.id, cls.path) \
+            .join(cls, User.id == cls.user_id) \
+            .where(cls.id == record_id, cls.user_id == user_id)
         result = await session.execute(stmt)
         instance = result.one_or_none()
         return instance
