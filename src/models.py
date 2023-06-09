@@ -47,16 +47,6 @@ class User(Base):
         instance = result.one_or_none()
         return instance
 
-    # @classmethod
-    # async def select_user_by_uuid(cls,
-    #                               session: AsyncSession,
-    #                               user_uuid: uid.UUID
-    #                               ) -> Row | None:
-    #     stmt = select(cls.id, cls.uuid).where(cls.uuid == user_uuid)
-    #     result = await session.execute(stmt)
-    #     instance = result.one_or_none()
-    #     return instance
-
     @classmethod
     async def select_user_by_id_uuid(cls,
                                      session: AsyncSession,
